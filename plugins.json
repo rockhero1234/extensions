@@ -1,0 +1,20 @@
+[
+    {
+        "iconUrl": "https://raw.githubusercontent.com/rockhero1234/extensions/refs/heads/master/Screenshot_20241012-211513_Binged%7E3.png",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/rockhero1234/extensions",
+        "fileSize": 12067,
+        "status": 1,
+        "authors": [
+            "Dilip"
+        ],
+        "tvTypes": [
+            "Movie"
+        ],
+        "version": 1,
+        "internalName": "BingedReview",
+        "description": "Data about streaming and review",
+        "url": "https://raw.githubusercontent.com/rockhero1234/extensions/builds/BingedReview.cs3",
+        "name": "BingedReview"
+    }
+]
