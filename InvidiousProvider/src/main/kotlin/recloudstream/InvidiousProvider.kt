@@ -8,129 +8,79 @@ import com.lagradost.cloudstream3.utils.loadExtractor
 import java.net.URLEncoder
 
 class InvidiousProvider : MainAPI() { // all providers must be an instance of MainAPI
-    override var mainUrl = "https://iv.ggtyler.dev"
-    override var name = "Invidious" // name of provider
-    override val supportedTypes = setOf(TvType.Others)
-
+      override var mainUrl = "https://www.binged.com"
+    override var name = "CustomProvider"
+    override val supportedTypes = setOf(TvType.Movie)
     override var lang = "en"
-
-    // enable this when your provider has a main page
     override val hasMainPage = true
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val popular = tryParseJson<List<SearchEntry>>(
-            app.get("$mainUrl/api/v1/popular?fields=videoId,title").text
-        )
-        val trending = tryParseJson<List<SearchEntry>>(
-            app.get("$mainUrl/api/v1/trending?fields=videoId,title").text
-        )
+        val response = app.post(
+            "$mainUrl/wp-admin/admin-ajax.php",
+            data = mapOf(
+                "filters[search]" to "",
+                "filters[recommend]" to "false",
+                "filters[date-from]" to "",
+                "filters[date-to]" to "",
+                "filters[mode]" to "streaming-soon",
+                "filters[page]" to "0",
+                "action" to "mi_events_load_data",
+                "mode" to "streaming-soon",
+                "start" to "0",
+                "length" to "20",
+                "customcatalog" to "0"
+            ),
+            headers = mapOf(
+                "Content-Type" to "application/x-www-form-urlencoded; charset=UTF-8",
+                "Accept" to "*/*",
+                "X-Requested-With" to "XMLHttpRequest",
+                "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
+                "Referer" to "$mainUrl"
+            )
+        ).text
+
+        val json = tryParseJson<Map<String, Any>>(response)
+        val dataList = json?.get("data") as? List<Map<String, Any>>
+
+        val movies = dataList?.map { entry ->
+            newMovieSearchResponse(
+                title = entry["title"].toString(),
+                url = mainUrl + entry["url"].toString(),
+                type = TvType.Movie
+            ) {
+                this.posterUrl = entry["image_url"].toString()
+                this.plot = entry["review"].toString()
+                addSubtitle(entry["streaming_date"].toString(), 0)
+            }
+        } ?: emptyList()
+
         return newHomePageResponse(
             listOf(
-                HomePageList(
-                    "Popular",
-                    popular?.map { it.toSearchResponse(this) } ?: emptyList(),
-                    true
-                ),
-                HomePageList(
-                    "Trending",
-                    trending?.map { it.toSearchResponse(this) } ?: emptyList(),
-                    true
-                )
-            ),
-            false
+                HomePageList("Streaming Soon", movies, true)
+            ), false
         )
     }
 
-    // this function gets called when you search for something
     override suspend fun search(query: String): List<SearchResponse> {
-        val res = tryParseJson<List<SearchEntry>>(
-            app.get("$mainUrl/api/v1/search?q=${query.encodeUri()}&page=1&type=video&fields=videoId,title").text
-        )
-        return res?.map { it.toSearchResponse(this) } ?: emptyList()
+        // Implement search functionality if needed
+        return emptyList()
     }
 
     override suspend fun load(url: String): LoadResponse? {
-        val videoId = Regex("watch\\?v=([a-zA-Z0-9_-]+)").find(url)?.groups?.get(1)?.value
-        val res = tryParseJson<VideoEntry>(
-            app.get("$mainUrl/api/v1/videos/$videoId?fields=videoId,title,description,recommendedVideos,author,authorThumbnails,formatStreams").text
-        )
-        return res?.toLoadResponse(this)
+        // Implement load functionality if needed
+        return null
     }
-
-    private data class SearchEntry(
-        val title: String,
-        val videoId: String
-    ) {
-        fun toSearchResponse(provider: InvidiousProvider): SearchResponse {
-            return provider.newMovieSearchResponse(
-                title,
-                "${provider.mainUrl}/watch?v=$videoId",
-                TvType.Movie
-            ) {
-                this.posterUrl = "${provider.mainUrl}/vi/$videoId/mqdefault.jpg"
-            }
-        }
-    }
-
-    private data class VideoEntry(
-        val title: String,
-        val description: String,
-        val videoId: String,
-        val recommendedVideos: List<SearchEntry>,
-        val author: String,
-        val authorThumbnails: List<Thumbnail>
-    ) {
-        suspend fun toLoadResponse(provider: InvidiousProvider): LoadResponse {
-            return provider.newMovieLoadResponse(
-                title,
-                "${provider.mainUrl}/watch?v=$videoId",
-                TvType.Movie,
-                "$videoId"
-            ) {
-                plot = description
-                posterUrl = "${provider.mainUrl}/vi/$videoId/hqdefault.jpg"
-                recommendations = recommendedVideos.map { it.toSearchResponse(provider) }
-                actors = listOf(
-                    ActorData(
-                        Actor(author, authorThumbnails.get(authorThumbnails.size - 1)?.url ?: ""),
-                        roleString = "Author"
-                    )
-                )
-            }
-        }
-    }
-
-    private data class Thumbnail(
-        val url: String
-    )
-
+    
     override suspend fun loadLinks(
         data: String,
         isCasting: Boolean,
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        loadExtractor(
-            "https://youtube.com/watch?v=$data",
-            subtitleCallback,
-            callback
-        )
-        callback(
-            ExtractorLink(
-                "Invidious",
-                "Invidious",
-                "$mainUrl/api/manifest/dash/id/$data",
-                "",
-                Qualities.Unknown.value,
-                false,
-                mapOf(),
-                null,
-                true
-            )
-        )
-        return true
+        // Implement loadLinks functionality if needed
+        return false
     }
-
+    
     companion object {
         fun String.encodeUri() = URLEncoder.encode(this, "utf8")
     }
