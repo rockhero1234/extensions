@@ -49,7 +49,7 @@ class InvidiousProvider : MainAPI() {
             url = entry["link"].toString(),
             type = TvType.Movie
         ) {
-            this.posterUrl = entry["image"].toString()
+            this.posterUrl = entry["big-image"].toString()
             //this.plot = entry["review"].toString()
         }
     } ?: emptyList()
@@ -82,6 +82,7 @@ class InvidiousProvider : MainAPI() {
 val tags = listOf(
     doc.select("span.single-mevents-platforms-row-date").text().toString(),
     doc.select("span.rating-span").first().text().toString(),
+    doc.select('img.single-mevents-platforms-row-image').attr("alt").toString(),
     if (dtsplit.size > 1) dtsplit[1] else "",
     if (dtsplit.size > 2) dtsplit[2] else "",
     if (dtsplit.size > 3) dtsplit[3] else ""
