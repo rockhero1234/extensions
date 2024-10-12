@@ -15,7 +15,7 @@ class InvidiousProvider : MainAPI() {
     override val hasMainPage = true
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        request.horizontal
+       
         val response = app.post(
             "$mainUrl/wp-admin/admin-ajax.php",
             data = mapOf(
@@ -60,7 +60,7 @@ class InvidiousProvider : MainAPI() {
         return newHomePageResponse(
             listOf(
                 HomePageList("Streaming Next", movies, false)
-            ), false
+            ), true
         )
     }
 
