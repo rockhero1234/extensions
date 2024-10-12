@@ -73,10 +73,9 @@ class InvidiousProvider : MainAPI() {
         val title = doc.select("h1").first()!!.text()
         //val year = "(?<=\\()\\d{4}(?=\\))".toRegex().find(title)?.value?.toIntOrNull()
         val imageUrl = "https://picsum.photos/536/354"
-        val plot = doc.select("p").first()!!.text().take(4).toIntOrNull()
-        val link=''
-        val year= doc.select("div.single-mevents-meta").text()
-        return newMovieLoadResponse(title, url, TvType.Movie,link) {
+        val plot = doc.select("p").first()!!.text()
+        val year= doc.select("div.single-mevents-meta").text().take(4).toIntOrNull
+        return newMovieLoadResponse(title, url, TvType.Movie) {
                 this.posterUrl = imageUrl
                 this.year = year
                 this.plot = plot
