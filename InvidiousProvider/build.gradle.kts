@@ -4,7 +4,7 @@ version = 6
 cloudstream {
     // All of these properties are optional, you can safely remove them
 
-    description = "Watch content from any invidious instance"
+    description = "Watch content from any binged instance"
     authors = listOf("Cloudburst")
 
     /**
