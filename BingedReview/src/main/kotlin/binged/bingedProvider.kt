@@ -12,7 +12,7 @@ class BingedProvider : MainAPI() {
     override var mainUrl = "https://www.binged.com"
     override var name = "Binged"
     override val supportedTypes = setOf(TvType.Movie)
-    override var lang = "em"
+    override var lang = "en"
     override val hasMainPage = true
 
     
