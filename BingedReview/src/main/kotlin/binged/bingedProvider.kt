@@ -99,11 +99,9 @@ class BingedProvider : MainAPI() {
         MovieSearchResponse(
             name = entry["title"].toString(),
             url = entry["link"].toString(),
-            type = TvType.Movie
-        ) {
-            this.posterUrl = entry["big-image"].toString()
-            //this.plot = entry["review"].toString()
-        }
+            type = TvType.Movie,
+            posterUrl = entry["big-image"].toString()
+        ) 
     } ?: emptyList()
     return movies.mapNotNull{
         it.MovieSearchResponse()
