@@ -15,7 +15,7 @@ class InvidiousProvider : MainAPI() {
     override val hasMainPage = true
 
     
-    suspend fun getData(titled: String): List<MovieSearchResponse> {
+    suspend fun getData(titled: String,i:Int): List<MovieSearchResponse> {
     val response = app.post(
         "$mainUrl/wp-admin/admin-ajax.php",
         data = mapOf(
@@ -28,7 +28,7 @@ class InvidiousProvider : MainAPI() {
             "action" to "mi_events_load_data",
             "mode" to "$titled",
             "start" to "0",
-            "length" to "20",
+            "length" to "$i",
             "customcatalog" to "0"
         ),
         headers = mapOf(
@@ -57,8 +57,8 @@ class InvidiousProvider : MainAPI() {
     return movies
     }
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val stsoon = getData("streaming-soon")
-        val stnow = getData("streaming-now")
+        val stsoon = getData("streaming-soon",page*10)
+        val stnow = getData("streaming-now",page*10)
         return newHomePageResponse(
             listOf(
                 HomePageList("Streaming Soon", stsoon, false),
