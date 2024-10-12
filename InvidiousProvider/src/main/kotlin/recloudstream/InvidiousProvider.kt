@@ -69,7 +69,13 @@ class InvidiousProvider : MainAPI() {
     }
 
     override suspend fun load(url: String): LoadResponse? {
-        return null
+        val doc = app.get(url, cacheTime = 60).document
+        val title = doc.select("h1").first()!!.text()
+        //val year = "(?<=\\()\\d{4}(?=\\))".toRegex().find(title)?.value?.toIntOrNull()
+        val imageUrl = "https://picsum.photos/536/354"
+        val plot = doc.select("p").first()!!.text()
+        val links = ''
+      
     }
 
     override suspend fun loadLinks(
