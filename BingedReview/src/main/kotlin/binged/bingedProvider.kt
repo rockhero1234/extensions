@@ -10,9 +10,9 @@ import java.net.URLEncoder
 
 class BingedProvider : MainAPI() {
     override var mainUrl = "https://www.binged.com"
-    override var name = "Invidious"
+    override var name = "Binged"
     override val supportedTypes = setOf(TvType.Movie)
-    override var lang = "en"
+    override var lang = "em"
     override val hasMainPage = true
 
     
