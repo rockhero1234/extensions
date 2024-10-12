@@ -44,10 +44,10 @@ class InvidiousProvider : MainAPI() {
         val movies = dataList?.map { entry ->
             newMovieSearchResponse(
                 name = entry["title"].toString(),
-                url = mainUrl + entry["url"].toString(),
+                url = mainUrl + entry["link"].toString(),
                 type = TvType.Movie
             ) {
-                this.posterUrl = entry["image_url"].toString()
+                this.posterUrl = entry["image"].toString()
                 //this.plot = entry["review"].toString()
             }
         } ?: emptyList()
