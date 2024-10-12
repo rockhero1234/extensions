@@ -74,7 +74,7 @@ class InvidiousProvider : MainAPI() {
         val dt= doc.select("div.single-mevents-meta").text()
         val dtsplit = dt.split("|")
         val imageUrl = doc.select("meta")[15].attr("content").toString()
-        val tags = listOf(doc.select("div.single-mevents-platforms-row-date").text().toString(),
+        val tags = listOf(doc.select("span.single-mevents-platforms-row-date").text().toString(),
                           doc.select("span.rating-span").first().text().toString(),
                           dtsplit[1],
                           dtsplit[2],
@@ -83,8 +83,8 @@ class InvidiousProvider : MainAPI() {
                           
                           
         //val imageUrl = app.select("meta[property=og:image]").first().text()
-        val plot = dtsplit[0]
-        val year= dt.take(4).toIntOrNull()
+        val plot = doc.select("p").first()!!.text()
+        val year= dtsplit[0]
         return newMovieLoadResponse(title, url, TvType.Movie,' ') {
                 this.posterUrl = imageUrl
                 this.year = year
