@@ -49,7 +49,7 @@ class InvidiousProvider : MainAPI() {
         val movies = dataList?.map { entry ->
             newMovieSearchResponse(
                 name = entry["title"].toString(),
-                url = mainUrl + entry["link"].toString(),
+                url = entry["link"].toString(),
                 type = TvType.Movie
             ) {
                 this.posterUrl = entry["big-image"].toString()
@@ -60,7 +60,7 @@ class InvidiousProvider : MainAPI() {
         return newHomePageResponse(
             listOf(
                 HomePageList("Streaming Next", movies, false)
-            ), true
+            ), false
         )
     }
 
