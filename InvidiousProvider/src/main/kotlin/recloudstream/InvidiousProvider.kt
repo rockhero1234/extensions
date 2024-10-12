@@ -71,8 +71,8 @@ class InvidiousProvider : MainAPI() {
     override suspend fun load(url: String): LoadResponse? {
         val doc = app.get(url, cacheTime = 60).document
         val title = doc.select("h1").first()!!.text()
-        //val year = "(?<=\\()\\d{4}(?=\\))".toRegex().find(title)?.value?.toIntOrNull()
-        val imageUrl = app.select("meta[property=og:image]").first().text()
+        val imageUrl = '/<meta property="og:image"/gm'.toRegex().find('content')?.text()
+        //val imageUrl = app.select("meta[property=og:image]").first().text()
         val plot = doc.select("p").first()!!.text()
         val year= doc.select("div.single-mevents-meta").text().take(4).toIntOrNull()
         return newMovieLoadResponse(title, url, TvType.Movie,' ') {
