@@ -1,6 +1,6 @@
 {
-    "name": "binged testing",
-    "description": "testing",
+    "name": "binged",
+    "description": "review",
     "manifestVersion": 1,
     "pluginLists": [
       "https://raw.githubusercontent.com/rockhero1234/extensions/refs/heads/builds/plugins.json"
