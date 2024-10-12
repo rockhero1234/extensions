@@ -1,5 +1,3 @@
-package recloudstream
-
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.AppUtils.tryParseJson
 import com.lagradost.cloudstream3.utils.ExtractorLink
@@ -7,9 +5,9 @@ import com.lagradost.cloudstream3.utils.Qualities
 import com.lagradost.cloudstream3.utils.loadExtractor
 import java.net.URLEncoder
 
-class InvidiousProvider : MainAPI() { // all providers must be an instance of MainAPI
-      override var mainUrl = "https://www.binged.com"
-    override var name = "CustomProvider"
+class InvidiousProvider : MainAPI() {
+    override var mainUrl = "https://www.binged.com"
+    override var name = "Invidious"
     override val supportedTypes = setOf(TvType.Movie)
     override var lang = "en"
     override val hasMainPage = true
