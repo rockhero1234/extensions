@@ -15,7 +15,7 @@ class InvidiousProvider : MainAPI() {
     override val hasMainPage = true
 
     
-    fun getData(titled: String): List<MovieSearchResponse> {
+    suspend fun getData(titled: String): List<MovieSearchResponse> {
     val response = app.post(
         "$mainUrl/wp-admin/admin-ajax.php",
         data = mapOf(
