@@ -1,3 +1,4 @@
+package recloudstream
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.AppUtils.tryParseJson
 import com.lagradost.cloudstream3.utils.ExtractorLink
