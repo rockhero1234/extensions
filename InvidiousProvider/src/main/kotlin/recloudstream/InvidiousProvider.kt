@@ -72,7 +72,7 @@ class InvidiousProvider : MainAPI() {
         val doc = app.get(url, cacheTime = 60).document
         val title = doc.select("h1").first()!!.text()
         //val year = "(?<=\\()\\d{4}(?=\\))".toRegex().find(title)?.value?.toIntOrNull()
-        val imageUrl = "https://picsum.photos/536/354"
+        val imageUrl = app.select("meta[property=og:image]").first().text()
         val plot = doc.select("p").first()!!.text()
         val year= doc.select("div.single-mevents-meta").text().take(4).toIntOrNull()
         return newMovieLoadResponse(title, url, TvType.Movie,' ') {
