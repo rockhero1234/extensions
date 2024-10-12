@@ -48,7 +48,7 @@ class InvidiousProvider : MainAPI() {
                 type = TvType.Movie
             ) {
                 this.posterUrl = entry["image_url"].toString()
-                this.plot = entry["review"].toString()
+                //this.plot = entry["review"].toString()
             }
         } ?: emptyList()
 
