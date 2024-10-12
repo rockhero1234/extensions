@@ -38,9 +38,13 @@ class InvidiousProvider : MainAPI() {
                 "Referer" to "$mainUrl"
             )
         ).text
-
+        
         val json = tryParseJson<Map<String, Any>>(response)
         val dataList = json?.get("data") as? List<Map<String, Any>>
+        
+        // Debugging output
+        println("Response JSON: $json")
+        
         val movies = dataList?.map { entry ->
             newMovieSearchResponse(
                 name = entry["title"].toString(),
@@ -51,10 +55,10 @@ class InvidiousProvider : MainAPI() {
                 //this.plot = entry["review"].toString()
             }
         } ?: emptyList()
-
+        
         return newHomePageResponse(
             listOf(
-                HomePageList("Streaming Soon", movies, true)
+                HomePageList("Streaming Next", movies, true)
             ), false
         )
     }
