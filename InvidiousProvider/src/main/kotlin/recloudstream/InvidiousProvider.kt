@@ -84,7 +84,7 @@ class InvidiousProvider : MainAPI() {
                           
         //val imageUrl = app.select("meta[property=og:image]").first().text()
         val plot = doc.select("p").first()!!.text()
-        val year= dtsplit[0]
+        val year= dtsplit[0].toIntOrNull()
         return newMovieLoadResponse(title, url, TvType.Movie,' ') {
                 this.posterUrl = imageUrl
                 this.year = year
