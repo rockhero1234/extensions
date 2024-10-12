@@ -48,7 +48,6 @@ class InvidiousProvider : MainAPI() {
             ) {
                 this.posterUrl = entry["image_url"].toString()
                 this.plot = entry["review"].toString()
-                addSubtitle(entry["streaming_date"].toString(), 0)
             }
         } ?: emptyList()
 
