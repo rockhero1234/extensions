@@ -8,7 +8,7 @@ import com.lagradost.cloudstream3.utils.Qualities
 import com.lagradost.cloudstream3.utils.loadExtractor
 import java.net.URLEncoder
 
-class InvidiousProvider : MainAPI() {
+class BingedProvider : MainAPI() {
     override var mainUrl = "https://www.binged.com"
     override var name = "Invidious"
     override val supportedTypes = setOf(TvType.Movie)
