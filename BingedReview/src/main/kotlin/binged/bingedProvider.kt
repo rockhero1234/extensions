@@ -71,7 +71,43 @@ class BingedProvider : MainAPI() {
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
-        return emptyList()
+        val response = app.post(
+        "$mainUrl/wp-admin/admin-ajax.php",
+        data = mapOf(
+            "action" to "mi_events_load_data",
+    "test-search" to "1",
+    "start" to "0",
+    "length" to "20",
+    "search[value]" to "$query",
+    "customcatalog" to "0",
+    "mode" to "all",
+    "filters[search]" to "$qry"
+        ),
+        headers = mapOf(
+            "Content-Type" to "application/x-www-form-urlencoded; charset=UTF-8",
+            "Accept" to "*/*",
+            "X-Requested-With" to "XMLHttpRequest",
+            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
+            "Referer" to "$mainUrl"
+        )
+    ).text
+
+    val json = tryParseJson<Map<String, Any>>(response)
+    val dataList = json?.get("data") as? List<Map<String, Any>>
+
+    val movies = dataList?.map { entry ->
+        newMovieSearchResponse(
+            name = entry["title"].toString(),
+            url = entry["link"].toString(),
+            type = TvType.Movie
+        ) {
+            this.posterUrl = entry["big-image"].toString()
+            //this.plot = entry["review"].toString()
+        }
+    } ?: emptyList()
+    return movies.mapNotNull{
+        it.newMovirSearchResponse()
+    }
     }
 
     override suspend fun load(url: String): LoadResponse? {
