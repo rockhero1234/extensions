@@ -76,9 +76,9 @@ class InvidiousProvider : MainAPI() {
         val imageUrl = doc.select("meta")[15].attr("content").toString()
         val tags = listOf(doc.select("span.single-mevents-platforms-row-date").text().toString(),
                           doc.select("span.rating-span").first().text().toString(),
-                          dtsplit[1],
-                          dtsplit[2],
-                          dtsplit[3],
+                          dtsplit[1]==null?'':dtsplit[1],
+                          dtsplit[3]==null?'':dtsplit[2],
+                          dtsplit[3]==null?'':dtsplit[3],
                           )
                           
                           
