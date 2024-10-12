@@ -3,6 +3,7 @@ package recloudstream
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.AppUtils.tryParseJson
 import com.lagradost.cloudstream3.utils.ExtractorLink
+import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 import com.lagradost.cloudstream3.utils.Qualities
 import com.lagradost.cloudstream3.utils.loadExtractor
 import java.net.URLEncoder
@@ -79,7 +80,7 @@ class InvidiousProvider : MainAPI() {
         val dt = doc.select("div.single-mevents-meta").text()
         val dtsplit = dt.split("|")
         val imageUrl = doc.select("meta")[15].attr("content").toString()
-
+       val trailer = doc.select("div.bng-section__content")[1].select("a").attr("href").toString()
 val tags = listOf(
     doc.select("span.single-mevents-platforms-row-date").text().toString(),
     doc.select("span.rating-span").first().text().toString(),
@@ -98,6 +99,7 @@ val tags = listOf(
                 this.year = year
                 this.plot = plot
                 this.tags= tags
+            addTrailer(trailer)
         }
       
     }
