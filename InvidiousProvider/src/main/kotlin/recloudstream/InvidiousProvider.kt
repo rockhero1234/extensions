@@ -16,7 +16,8 @@ class InvidiousProvider : MainAPI() {
 
     
     suspend fun getData(titled: String,i:Int): List<MovieSearchResponse> {
-    val response = app.post(
+        val j = i-10
+        val response = app.post(
         "$mainUrl/wp-admin/admin-ajax.php",
         data = mapOf(
             "filters[search]" to "",
@@ -27,7 +28,7 @@ class InvidiousProvider : MainAPI() {
             "filters[page]" to "0",
             "action" to "mi_events_load_data",
             "mode" to "$titled",
-            "start" to "0",
+            "start" to "$j",
             "length" to "$i",
             "customcatalog" to "0"
         ),
