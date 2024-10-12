@@ -71,15 +71,17 @@ class InvidiousProvider : MainAPI() {
     override suspend fun load(url: String): LoadResponse? {
         val doc = app.get(url, cacheTime = 60).document
         val title = doc.select("h1").first()!!.text()
-        val dt= doc.select("div.single-mevents-meta").text()
+        val dt = doc.select("div.single-mevents-meta").text()
         val dtsplit = dt.split("|")
         val imageUrl = doc.select("meta")[15].attr("content").toString()
-        val tags = listOf(doc.select("span.single-mevents-platforms-row-date").text().toString(),
-                          doc.select("span.rating-span").first().text().toString(),
-                          dtsplit[1]==null?'':dtsplit[1],
-                          dtsplit[3]==null?'':dtsplit[2],
-                          dtsplit[3]==null?'':dtsplit[3],
-                          )
+
+val tags = listOf(
+    doc.select("span.single-mevents-platforms-row-date").text().toString(),
+    doc.select("span.rating-span").first().text().toString(),
+    if (dtsplit.size > 1) dtsplit[1] else "",
+    if (dtsplit.size > 2) dtsplit[2] else "",
+    if (dtsplit.size > 3) dtsplit[3] else ""
+)
                           
                           
         //val imageUrl = app.select("meta[property=og:image]").first().text()
