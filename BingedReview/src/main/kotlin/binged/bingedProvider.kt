@@ -81,7 +81,7 @@ class BingedProvider : MainAPI() {
     "search[value]" to "$query",
     "customcatalog" to "0",
     "mode" to "all",
-    "filters[search]" to "$qry"
+    "filters[search]" to "$query"
         ),
         headers = mapOf(
             "Content-Type" to "application/x-www-form-urlencoded; charset=UTF-8",
@@ -106,7 +106,7 @@ class BingedProvider : MainAPI() {
         }
     } ?: emptyList()
     return movies.mapNotNull{
-        it.newMovirSearchResponse()
+        it.newMovieSearchResponse()
     }
     }
 
