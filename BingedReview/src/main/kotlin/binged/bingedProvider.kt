@@ -46,7 +46,7 @@ class BingedProvider : MainAPI() {
     val dataList = json?.get("data") as? List<Map<String, Any>>
 
     val movies = dataList?.map { entry ->
-        newMovieSearchResponse(
+        SearchResponse(
             name = entry["title"].toString(),
             url = entry["link"].toString(),
             type = TvType.Movie
@@ -96,7 +96,7 @@ class BingedProvider : MainAPI() {
     val dataList = json?.get("data") as? List<Map<String, Any>>
 
     val movies = dataList?.map { entry ->
-        newMovieSearchResponse(
+        MovieSearchResponse(
             name = entry["title"].toString(),
             url = entry["link"].toString(),
             type = TvType.Movie
@@ -106,7 +106,7 @@ class BingedProvider : MainAPI() {
         }
     } ?: emptyList()
     return movies.mapNotNull{
-        it.newMovieSearchResponse()
+        it.MovieSearchResponse()
     }
     }
 
