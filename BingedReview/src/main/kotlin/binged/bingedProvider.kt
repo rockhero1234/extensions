@@ -103,9 +103,7 @@ class BingedProvider : MainAPI() {
             posterUrl = entry["big-image"].toString()
         ) 
     } ?: emptyList()
-    return movies.mapNotNull{
-        it.MovieSearchResponse()
-    }
+    return movies
     }
 
     override suspend fun load(url: String): LoadResponse? {
