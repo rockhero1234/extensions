@@ -52,14 +52,14 @@ class InvidiousProvider : MainAPI() {
                 url = entry["link"].toString(),
                 type = TvType.Movie
             ) {
-                this.posterUrl = entry["big-image"].toString()
+                this.posterUrl = entry["image"].toString()
                 //this.plot = entry["review"].toString()
             }
         } ?: emptyList()
         
         return newHomePageResponse(
             listOf(
-                HomePageList("Streaming Next", movies, false)
+                HomePageList("Streaming Soon", movies, false)
             ), true
         )
     }
@@ -74,8 +74,8 @@ class InvidiousProvider : MainAPI() {
         //val year = "(?<=\\()\\d{4}(?=\\))".toRegex().find(title)?.value?.toIntOrNull()
         val imageUrl = "https://picsum.photos/536/354"
         val plot = doc.select("p").first()!!.text()
-        val year= doc.select("div.single-mevents-meta").text().take(4).toIntOrNull
-        return newMovieLoadResponse(title, url, TvType.Movie) {
+        val year= doc.select("div.single-mevents-meta").text().take(4).toIntOrNull()
+        return newMovieLoadResponse(title, url, TvType.Movie,' ') {
                 this.posterUrl = imageUrl
                 this.year = year
                 this.plot = plot
