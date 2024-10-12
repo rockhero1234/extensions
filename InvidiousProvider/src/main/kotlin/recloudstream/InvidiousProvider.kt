@@ -1,4 +1,5 @@
 package recloudstream
+
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.AppUtils.tryParseJson
 import com.lagradost.cloudstream3.utils.ExtractorLink
@@ -40,10 +41,9 @@ class InvidiousProvider : MainAPI() {
 
         val json = tryParseJson<Map<String, Any>>(response)
         val dataList = json?.get("data") as? List<Map<String, Any>>
-
         val movies = dataList?.map { entry ->
             newMovieSearchResponse(
-                title = entry["title"].toString(),
+                name = entry["title"].toString(),
                 url = mainUrl + entry["url"].toString(),
                 type = TvType.Movie
             ) {
@@ -60,25 +60,22 @@ class InvidiousProvider : MainAPI() {
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
-        // Implement search functionality if needed
         return emptyList()
     }
 
     override suspend fun load(url: String): LoadResponse? {
-        // Implement load functionality if needed
         return null
     }
-    
+
     override suspend fun loadLinks(
         data: String,
         isCasting: Boolean,
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        // Implement loadLinks functionality if needed
         return false
     }
-    
+
     companion object {
         fun String.encodeUri() = URLEncoder.encode(this, "utf8")
     }
