@@ -69,20 +69,20 @@ if (fltr.isNotEmpty()) {
         val stnow = getData("streaming-now",page*10)
         val netflix = getData("streaming-now",page*10,"netflix.webp")
         val amazon= getData("streaming-now",page*10,"amazon")
-        val liv = getData("streaming-now",page*10,"sony")
+        /*val liv = getData("streaming-now",page*10,"sony")
         val hotstar = getData("streaming-now",page*10,"hotstar")
         val  zee = getData("streaming-now",page*10,"zee")
-        val jio = getData("streaming-now",page*10,"jio")
+        val jio = getData("streaming-now",page*10,"jio")*/
         return newHomePageResponse(
             listOf(
                 HomePageList("Streaming Soon", stsoon, false),
                 HomePageList("Streaming Now", stnow, false),
                 HomePageList("Netflix", netflix, false),
                 HomePageList("Prime", amazon, false),
-                HomePageList("Sony liv", liv, false),
+                /*HomePageList("Sony liv", liv, false),
                 HomePageList("Hotstar", hotstar, false),
                 HomePageList("Zee5", zee, false),
-                HomePageList("JioCinema", jio, false)
+                HomePageList("JioCinema", jio, false)*/
             ), true
             
         )
