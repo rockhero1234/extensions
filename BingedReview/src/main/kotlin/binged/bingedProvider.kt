@@ -16,7 +16,7 @@ class BingedProvider : MainAPI() {
     override val hasMainPage = true
 
     
-    suspend fun getData(titled: String,i:Int): List<MovieSearchResponse> {
+    suspend fun getData(titled: String,i:Int,fltr:String?=null): List<MovieSearchResponse> {
         val j = i-10
         val response = app.post(
         "$mainUrl/wp-admin/admin-ajax.php",
@@ -43,8 +43,9 @@ class BingedProvider : MainAPI() {
     ).text
 
     val json = tryParseJson<Map<String, Any>>(response)
+     
     val dataList = json?.get("data") as? List<Map<String, Any>>
-
+    if(fltr!=null) dataList=dataList?.filter{it["platform"]?.contains(fltr) ==true}
     val movies = dataList?.map { entry ->
         newMovieSearchResponse(
             name = entry["title"].toString(),
@@ -61,11 +62,12 @@ class BingedProvider : MainAPI() {
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
         val stsoon = getData("streaming-soon",page*10)
         val stnow = getData("streaming-now",page*10)
+        val netflix = getData("streaming-now",page*10,"netflix.webp")
         return newHomePageResponse(
             listOf(
                 HomePageList("Streaming Soon", stsoon, false),
                 HomePageList("Streaming Now", stnow, false),
-                
+                HomePageList("Netflix", netflix, false)
             ), true
         )
     }
