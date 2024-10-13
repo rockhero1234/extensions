@@ -45,7 +45,10 @@ class BingedProvider : MainAPI() {
     val json = tryParseJson<Map<String, Any>>(response)
      
     val dataList = json?.get("data") as? List<Map<String, Any>>
-    if(fltr!=null) dataList=dataList?.filter{it["platform"]?.contains(fltr) ==true}
+    if(fltr!=null) dataList= dataList.filter { entry ->
+        val platforms = entry["platform"] as? List<String>
+        platforms?.firstOrNull()?.contains("netflix.webp") == true
+    }
     val movies = dataList?.map { entry ->
         newMovieSearchResponse(
             name = entry["title"].toString(),
