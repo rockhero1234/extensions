@@ -43,12 +43,14 @@ class BingedProvider : MainAPI() {
     ).text
 
     val json = tryParseJson<Map<String, Any>>(response)
-    val platforms:List<String>
-    val dataList = json?.get("data") as? List<Map<String, Any>>
-    if(fltr!="") dataList= dataList.filter { entry ->
-        platforms= entry["platform"] as? List<String>
+    
+    var dataList = json?.get("data") as? List<Map<String, Any>>
+if (fltr.isNotEmpty()) {
+    dataList = dataList?.filter { entry ->
+        val platforms = entry["platform"] as? List<String>
         platforms?.firstOrNull()?.contains(fltr) == true
     }
+}
     val movies = dataList?.map { entry ->
         newMovieSearchResponse(
             name = entry["title"].toString(),
