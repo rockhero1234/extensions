@@ -16,7 +16,7 @@ class BingedProvider : MainAPI() {
     override val hasMainPage = true
 
     
-    suspend fun getData(titled: String,i:Int,fltr:String?=null): List<MovieSearchResponse> {
+    suspend fun getData(titled: String,i:Int,fltr:String=""): List<MovieSearchResponse> {
         val j = i-10
         val response = app.post(
         "$mainUrl/wp-admin/admin-ajax.php",
@@ -43,10 +43,10 @@ class BingedProvider : MainAPI() {
     ).text
 
     val json = tryParseJson<Map<String, Any>>(response)
-     
+    val platforms:List<String>
     val dataList = json?.get("data") as? List<Map<String, Any>>
-    if(fltr!=null) dataList= dataList.filter { entry ->
-        val platforms = entry["platform"] as? List<String>
+    if(fltr!="") dataList= dataList.filter { entry ->
+        platforms= entry["platform"] as? List<String>
         platforms?.firstOrNull()?.contains(fltr) == true
     }
     val movies = dataList?.map { entry ->
