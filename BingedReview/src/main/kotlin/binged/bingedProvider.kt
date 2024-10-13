@@ -77,11 +77,11 @@ if (fltr.isNotEmpty()) {
             listOf(
                 HomePageList("Streaming Soon", stsoon, false),
                 HomePageList("Streaming Now", stnow, false),
-                HomePageList("Netflix", netflix, false)
-                HomePageList("Prime", amazon, false)
-                HomePageList("Sony liv", liv, false)
-                HomePageList("Hotstar", hotstar, false)
-                HomePageList("Zee5", zee, false)
+                HomePageList("Netflix", netflix, false),
+                HomePageList("Prime", amazon, false),
+                HomePageList("Sony liv", liv, false),
+                HomePageList("Hotstar", hotstar, false),
+                HomePageList("Zee5", zee, false),
                 HomePageList("JioCinema", jio, false)
             ), true
             
