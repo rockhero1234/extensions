@@ -2,11 +2,11 @@ version = 1
 
 
 cloudstream {
-    language = "hi"
+    language = "em"
     // All of these properties are optional, you can safely remove them
 
-    description = "Movies & Series"
-    authors = listOf("darkdemon","Dilip")
+    description = "Documentaries"
+    authors = listOf("Dilip")
 
     /**
      * Status int as the following:
@@ -17,8 +17,7 @@ cloudstream {
      * */
     status = 1 // will be 3 if unspecified
     tvTypes = listOf(
-        "TvSeries",
-        "Movie"
+        "Documentary"
     )
 
     iconUrl = "https://i.ibb.co/SwQRhsn/20241016-074942.jpg"
