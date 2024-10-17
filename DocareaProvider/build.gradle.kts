@@ -2,7 +2,7 @@ version = 1
 
 
 cloudstream {
-    language = "em"
+    language = "en"
     // All of these properties are optional, you can safely remove them
 
     description = "Documentaries"
