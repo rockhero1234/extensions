@@ -21,10 +21,11 @@ import com.lagradost.cloudstream3.utils.Qualities
 import com.lagradost.cloudstream3.utils.StringUtils.encodeUri
 import com.lagradost.cloudstream3.utils.loadExtractor
 import com.lagradost.cloudstream3.utils.newExtractorLink
+import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 
 class InvidiousProvider : MainAPI() { // all providers must be an instance of MainAPI
-    override var mainUrl = "https://iv.ggtyler.dev"
-    override var name = "Invidious" // name of provider
+    override var mainUrl = "https://invd.cakestwix.com"
+    override var name = "Youtube" // name of provider
     override val supportedTypes = setOf(TvType.Others)
 
     override var lang = "en"
@@ -105,6 +106,7 @@ class InvidiousProvider : MainAPI() { // all providers must be an instance of Ma
                 plot = description
                 posterUrl = "${provider.mainUrl}/vi/$videoId/hqdefault.jpg"
                 recommendations = recommendedVideos.map { it.toSearchResponse(provider) }
+                addTrailer("https://youtube.com/watch?v=$videoId")
                 actors = listOf(
                     ActorData(
                         Actor(author, authorThumbnails.getOrNull(authorThumbnails.size - 1)?.url ?: ""),
@@ -125,18 +127,7 @@ class InvidiousProvider : MainAPI() { // all providers must be an instance of Ma
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        loadExtractor(
-            "https://youtube.com/watch?v=$data",
-            subtitleCallback,
-            callback
-        )
-        callback(
-            newExtractorLink(this.name, this.name, "$mainUrl/api/manifest/dash/id/$data") {
-                quality = Qualities.Unknown.value
-                type = ExtractorLinkType.DASH
-                referer = ""
-            }
-        )
-        return true
+        
+        return false
     }
 }
