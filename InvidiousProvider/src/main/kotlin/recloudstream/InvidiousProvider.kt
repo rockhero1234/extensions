@@ -121,13 +121,5 @@ class InvidiousProvider : MainAPI() { // all providers must be an instance of Ma
         val url: String
     )
 
-    override suspend fun loadLinks(
-        data: String,
-        isCasting: Boolean,
-        subtitleCallback: (SubtitleFile) -> Unit,
-        callback: (ExtractorLink) -> Unit
-    ): Boolean {
-        
-        return false
-    }
+    
 }
